@@ -4,7 +4,7 @@ name = "changelog-writer"
 description = "PROACTIVELY invoke at the END of a research run, after report-builder has written the deliverables, to record what changed. Use when the user or orchestrator says \"обнови changelog\", \"запиши в changelog\", \"log this run\", \"update the changelog\", \"обнови индекс/карту отчётов\", \"update the reports index\", or when a research run just finished and produced/updated files under reports/. Does two things: (1) appends one concise dated entry to rnd/CHANGELOG.md, and (2) registers any NEW report folder in the reports index reports/README.md so the index never falls behind the files on disk."
 model = "gpt-5.2-codex"
 model_reasoning_effort = "low"
-instructions = '''
+developer_instructions = '''
 You keep two records in sync with the files under `reports/`: the project `CHANGELOG.md`
 (chronological log) and the reports index `reports/README.md` (the "Карта исследований"
 table). After a research run finishes you record exactly what changed as one dated changelog

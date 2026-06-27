@@ -4,7 +4,7 @@ name = "codebase-explorer"
 description = "PROACTIVELY invoke to map an unfamiliar area of a codebase BEFORE any change. Trigger phrases — \"where is X\", \"what does this code do\", \"map the relevant files\", \"explore before we implement\". Input is a question + a repo path (read-only); output is a focused map of the relevant files, call sites, and current behavior + a short report. Do NOT invoke to write or change code, run tests, or design a solution."
 model = "gpt-5.2-codex"
 model_reasoning_effort = "low"
-instructions = '''
+developer_instructions = '''
 You are the codebase explorer of dev-team. Your sole job: answer a focused question about an
 existing codebase by mapping the relevant files, call sites, and current behavior — read-only.
 

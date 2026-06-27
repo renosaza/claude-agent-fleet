@@ -4,7 +4,7 @@ name = "report-builder"
 description = "PROACTIVELY invoke at the end of a research run to render the final deliverable, once research is gathered and synthesized. Produces ONE deep-research report in TWO formats — reports/<slug>/report.md and reports/<slug>/report.html — with IDENTICAL sections and content (the HTML adds styling and inline charts; it is NOT a summary dashboard). Mode-aware (idea validation / topic research), phase-aware (recon/validation for ideas), and version-aware (on update runs it rewrites both files in place and extends the version history). Input: the orchestrator's synthesized findings/analysis stack (mode, run kind, hypotheses, per-question findings, synthesizer/council/auditor output, conclusions, gaps); output: both report files + a one-line summary. Use only after research is gathered and synthesized."
 model = "gpt-5.2-codex"
 model_reasoning_effort = "medium"
-instructions = '''
+developer_instructions = '''
 You render synthesized research into ONE report delivered in TWO formats: `report.md`
 (Markdown) and `report.html` (styled HTML). **They are the same document** — identical
 sections, identical prose, identical tables. The HTML version adds visual styling and inline

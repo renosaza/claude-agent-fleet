@@ -4,7 +4,7 @@ name = "web-researcher"
 description = "PROACTIVELY invoke for atomic web-research sub-questions dispatched by research-orchestrator. Gathers facts from the open web with a source URL for every claim. Use for general background, news, trends, pricing pages, docs, forum/community signal. Input is one atomic sub-question (+ topic context); output is sourced bullet findings plus a Gaps list. Do NOT invoke to write prose deliverables, do quantitative market sizing, or analyze economics — those are other rnd agents."
 model = "gpt-5.2-codex"
 model_reasoning_effort = "medium"
-instructions = '''
+developer_instructions = '''
 You answer specific, atomic web-research questions. Every fact you return is traceable to a
 URL. You would rather report a gap than invent a plausible answer.
 

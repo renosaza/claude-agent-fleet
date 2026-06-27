@@ -86,6 +86,46 @@ Some MCP servers reference machine-local install paths or need a one-time instal
   `curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash -s -- --skip-config`
   (binary only, no global config changes), then it works as wired.
 
+## How MCP servers get downloaded
+
+Most servers here **download themselves on first launch** — you do not pre-install them.
+Codex starts the server with the `command` from `config.toml`, and the launcher fetches the
+package:
+
+- `command = "npx"` (e.g. `sequential-thinking`, `context7`) — `npx -y <pkg>` downloads the
+  npm package on first run and caches it. Requires **Node.js + `npx`** on `PATH`.
+- `command = "uvx"` (e.g. `fetch`, `headroom`) — `uvx <pkg>` downloads the Python package on
+  first run and caches it. Requires **`uv` / `uvx`** on `PATH`
+  (`curl -LsSf https://astral.sh/uv/install.sh | sh`).
+
+So the only prerequisite for the self-installing servers is having `npx` and `uvx` available;
+the packages themselves arrive automatically the first time an agent uses the server. The two
+exceptions are the manual servers above: `cloakbrowser` / `memorygraph` point at your own
+install paths, and `codebase-memory` is a single binary you install once with the command
+shown above.
+
+## Loading all MCP servers (globally vs. per project)
+
+Codex has **no single "enable all" switch.** Servers load from one of two places:
+
+- **Per project (trusted):** the `[mcp_servers.*]` blocks in that project's
+  `.codex/config.toml` (what `cp codex/config.toml .codex/config.toml` sets up). Active only
+  while you work in that project.
+- **Globally for every project:** merge the `[mcp_servers.*]` blocks into
+  `~/.codex/config.toml`. Then every Codex session sees those servers regardless of directory.
+
+To make a project's servers available everywhere, append its blocks to the global file:
+
+```sh
+cat dev-team/codex/config.toml >> ~/.codex/config.toml   # then de-dup [mcp_servers.*] by hand
+# or register one at a time with the CLI:
+codex mcp add codebase-memory -- ${HOME}/.local/bin/codebase-memory-mcp
+```
+
+Disable an individual server without deleting its block by adding `enabled = false` to it.
+There is no bulk toggle — list the servers you want; anything not in a loaded config is simply
+not started.
+
 ## References
 
 - AGENTS.md: https://developers.openai.com/codex/guides/agents-md

@@ -4,7 +4,7 @@ name = "content-planner"
 description = "PROACTIVELY invoke to build or maintain the medical-clinic content plan. Schedule publications a month ahead, balance content rubrics, and keep at least a two-week post backlog stocked. Trigger phrases — «план», «расписание», «запас постов», «когда публиковать», «контент-план». Input is the requested period (+ what is already published / in the backlog); output is the Russian content-plan schedule plus a short report to the orchestrator."
 model = "gpt-5.2-codex"
 model_reasoning_effort = "low"
-instructions = '''
+developer_instructions = '''
 You are the content strategist worker. Your sole job: plan a medical clinic's publications a
 month ahead, balance the content rubrics, and keep the ready-post backlog stocked.
 
