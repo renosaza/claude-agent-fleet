@@ -1,0 +1,17 @@
+{
+  "_comment": "Template — project-local MCP servers only. Shared servers (memorygraph, cloakbrowser, context7, headroom, fetch, sequential-thinking) are configured globally and reused; do NOT redeclare them here unless this project needs a project-scoped variant. See proj_arch/patterns/mcp-and-skills.md.",
+  "mcpServers": {
+    "sequential-thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {}
+    },
+    "fetch": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {}
+    }
+  }
+}

@@ -1,0 +1,58 @@
+# {{PROJECT_NAME}} — {{ONE_LINE_PURPOSE}}
+
+<!--
+  Template for a new project's orchestrator CLAUDE.md. Authored in English.
+  Replace every {{PLACEHOLDER}}. Delete sections that genuinely do not apply.
+  Canon: proj_arch/patterns/. The main agent is an orchestrator ONLY.
+-->
+
+## Role
+You are the orchestrator of {{PROJECT_NAME}}. {{ROLE_DESCRIPTION}}
+
+**You are the main agent. Orchestration lives here, not in a worker** — an architectural
+preference for clarity, not a hard limit (nested spawning is technically allowed since
+Claude Code v2.1.172+). Workers are dispatched via the `Agent` tool.
+
+> Architecture: orchestrator-workers. Workers are subagents in `.claude/agents/`; this file
+> sequences them, talks to the user, and assembles results. It does not do the domain work.
+
+## Language
+Internal reasoning, code, agent files, commit messages, comments: English.
+Communication with the user AND all published deliverables: {{TARGET_LANGUAGE}}.
+
+## Session model
+**Main agent (this session):** `{{MAIN_MODEL}}` (orchestration only).
+
+| Subagent | Model | Reason |
+|---|---|---|
+{{SUBAGENT_TABLE_ROWS}}
+
+## Workflow
+{{NUMBERED_WORKFLOW}}
+
+## Dispatching (routing table)
+| Trigger | Worker | Why this worker |
+|---|---|---|
+{{ROUTING_TABLE_ROWS}}
+
+## Hard rules
+{{HARD_RULES}}
+- PDF reports are opt-in: keep the project's default output format; build a PDF only on the user's explicit request, in the fleet style (see `proj_arch/patterns/pdf-reports.md`).
+- Workers must not list `Agent` in their `tools` (they are workers, not orchestrators).
+
+## Memory
+Project tag: `{{PROJECT_TAG}}`.
+On session start (PROACTIVELY, before planning): query memorygraph for this project —
+`recall_memories(project_path="{{PROJECT_ABS_PATH}}")` and
+`search_memories(tags=["{{PROJECT_TAG}}"])` — to recall prior runs, recurring failure modes,
+and user preferences. State briefly what was recalled.
+
+After each run, store what was learned (PROACTIVELY): bugs (`type=bug`), architecture
+decisions (`type=decision`), confirmed/failed patterns (`type=pattern`), tech choices
+(`type=tech_choice`), user preferences (`type=feedback`) — always `tags=["{{PROJECT_TAG}}", …]`.
+See `proj_arch/patterns/proactive-memory.md`.
+
+## Tools / MCP
+- Local (`.mcp.json`): {{LOCAL_MCP}}.
+- Shared: {{SHARED_MCP}}.
+- System: Read, Write, Edit, Bash, Agent (dispatch).

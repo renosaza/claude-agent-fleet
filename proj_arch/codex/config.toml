@@ -1,0 +1,32 @@
+# Codex configuration for the proj_arch project.
+# Place this at the project root as .codex/config.toml (trusted projects),
+# or merge the [mcp_servers.*] blocks into ~/.codex/config.toml.
+
+# Sensible defaults; tune to taste.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[mcp_servers.headroom]
+command = "uvx"
+args = ["--from", "headroom-ai[mcp]", "headroom", "mcp", "serve"]
+
+[mcp_servers.context7]
+command = "npx"
+args = ["-y", "@upstash/context7-mcp"]
+
+[mcp_servers.cloakbrowser]
+command = "${HOME}/.claude/mcp-venvs/cloakbrowser/bin/cloakbrowsermcp"
+args = ["--caps", "all"]
+
+[mcp_servers.memorygraph]
+command = "${HOME}/.claude/mcp-venvs/memorygraph/bin/memorygraph"
+args = ["--profile", "extended"]
+env = { MEMORY_SQLITE_PATH = "${HOME}/.claude/memory-graph/graph.db" }
+
+[mcp_servers.sequential-thinking]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+
+[mcp_servers.fetch]
+command = "uvx"
+args = ["mcp-server-fetch"]

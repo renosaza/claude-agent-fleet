@@ -1,0 +1,53 @@
+{
+  "_comment": "Template — see proj_arch/patterns/permissions-safety.md. Replace PROJECT_ABS_PATH and the *_LIST placeholders. A normal project writes only within its own root; gate cross-project and ~/.claude writes behind ask.",
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p *)",
+      "Bash(ls *)",
+      "Bash(cat *)",
+      "Bash(grep *)",
+      "Read(PROJECT_ABS_PATH/**)",
+      "Write(PROJECT_ABS_PATH/**)",
+      "Edit(PROJECT_ABS_PATH/**)",
+      "mcp__memorygraph__search_memories",
+      "mcp__memorygraph__recall_memories",
+      "mcp__memorygraph__store_memory",
+      "ADD_PROJECT_SPECIFIC_MCP_AND_SHELL_HERE"
+    ],
+    "ask": [
+      "Bash(git push*)",
+      "Bash(gh pr create *)",
+      "Bash(gh pr merge *)",
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(mv /*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -fr *)",
+      "Bash(rm -rf /*)",
+      "Bash(sudo rm *)",
+      "Bash(find * -delete*)",
+      "Bash(find * -exec rm *)",
+      "Bash(git reset --hard *)",
+      "Bash(git clean -fd*)",
+      "Bash(git checkout -- *)",
+      "Bash(git restore .)",
+      "Bash(git branch -D *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git push --force-with-lease*)",
+      "Bash(git rebase -i *)",
+      "Bash(git filter-branch*)",
+      "Bash(git filter-repo*)",
+      "Bash(* --no-verify*)",
+      "Bash(* --no-gpg-sign*)",
+      "Bash(dd if=*)",
+      "Bash(mkfs*)",
+      "Bash(chmod -R *)",
+      "Bash(chown -R *)",
+      "Bash(npm uninstall *)",
+      "Bash(pip uninstall *)"
+    ]
+  }
+}

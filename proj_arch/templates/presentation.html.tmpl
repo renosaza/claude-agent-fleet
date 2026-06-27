@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<!--
+  Grain Deck System — the fleet default presentation design.
+  Canon: proj_arch/patterns/presentations.md. Self-contained, no build step, no runtime.
+
+  Fill in: {{DECK_TITLE}}, the slide content (in the project's TARGET language), and {{SLIDE_COUNT}}.
+  Edit TWO knobs only, in :root below — keep everything else fixed:
+    --accent  one of #6B4FE8 (violet, default) | #2D6BE0 (blue) | #E8572A (orange) | #1F8A5B (green)
+    --radius  0px (Sharp, default) | 12px (Soft)
+  Dark theme: add class="dark" to <body> (see the .dark block in <style>). One accent, used once per slide.
+-->
+<html lang="{{LANG_CODE}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{DECK_TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* --- EDIT THESE TWO --- */
+    --accent:#6B4FE8;   /* #6B4FE8 violet | #2D6BE0 blue | #E8572A orange | #1F8A5B green */
+    --radius:0px;       /* 0px Sharp | 12px Soft */
+
+    /* --- FIXED: light palette (do not edit) --- */
+    --paper:#F4F2EE; --surface:#FFFFFF; --ink:#17161B; --muted:#76747C; --line:#E4E1DB;
+    --body:#3A3942; --body-2:#56545C; --image:#ECEAE4;
+  }
+  /* Dark theme: <body class="dark"> swaps the ground tokens; --accent/--radius stay. */
+  body.dark{
+    --paper:#131217; --surface:#1C1B23; --ink:#F1F0EC; --muted:#8E8C97; --line:#2A2932;
+    --body:#C9C8CF; --body-2:#C9C8CF; --image:#1C1B23;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:'Schibsted Grotesk',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+  }
+  ::selection{background:var(--accent); color:#fff;}
+  .deck{max-width:1180px; margin:0 auto; padding:56px; display:flex; flex-direction:column; gap:30px;}
+
+  /* Slide frame — fixed spec: 16/9, 56px 62px padding, 1px line, radius = corner style. */
+  .slide{
+    background:var(--surface); border:1px solid var(--line); border-radius:var(--radius);
+    padding:56px 62px; aspect-ratio:16/9; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .eyebrow{font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.2em; text-transform:uppercase; color:var(--accent);}
+  .eyebrow.muted{color:var(--muted);}
+  .footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line); padding-top:18px;}
+  .brand{display:flex; align-items:center; gap:12px;}
+  .sq{width:12px; height:12px; background:var(--accent); display:block;}
+  .label{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted);}
+  .pageno{font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.16em; color:var(--muted);}
+  .mid{flex:1; display:flex; flex-direction:column; justify-content:center;}
+  h2{margin:0; letter-spacing:-0.02em;}
+  p{margin:0;}
+</style>
+</head>
+<body><!-- add class="dark" for the dark theme -->
+<div class="deck">
+
+  <!-- ============ 1 · TITLE ============ -->
+  <div class="slide">
+    <div class="eyebrow">{{EYEBROW}}</div>
+    <h2 style="font-size:60px; font-weight:700; line-height:1.03; letter-spacing:-0.03em; max-width:80%;">{{TITLE}}</h2>
+    <div class="footer">
+      <div class="brand"><span class="sq"></span><span class="label">Grain Deck System</span></div>
+      <span class="pageno">01 / {{SLIDE_COUNT}}</span>
+    </div>
+  </div>
+
+  <!-- ============ 2 · SECTION DIVIDER ============ -->
+  <div class="slide">
+    <div class="eyebrow muted">{{EYEBROW}}</div>
+    <div>
+      <div style="font-size:150px; font-weight:800; line-height:0.82; letter-spacing:-0.05em; color:var(--accent);">{{SECTION_NUMBER}}</div>
+      <h2 style="font-size:42px; font-weight:600; margin-top:14px;">{{SECTION_TITLE}}</h2>
+    </div>
+    <div class="footer"><span class="label">Grain Deck System</span><span class="pageno">NN / {{SLIDE_COUNT}}</span></div>
+  </div>
+
+  <!-- ============ 3 · BULLETED CONTENT (square accent markers, NOT bullets) ============ -->
+  <div class="slide">
+    <div class="eyebrow">{{EYEBROW}}</div>
+    <div class="mid">
+      <h2 style="font-size:38px; font-weight:600; margin-bottom:32px;">{{HEADLINE}}</h2>
+      <div style="display:flex; flex-direction:column; gap:20px; max-width:78%;">
+        <div style="display:flex; align-items:flex-start; gap:16px;"><span style="width:11px; height:11px; background:var(--accent); display:block; margin-top:9px; flex:none;"></span><span style="font-size:20px; line-height:1.45; color:var(--body);">{{POINT_1}}</span></div>
+        <div style="display:flex; align-items:flex-start; gap:16px;"><span style="width:11px; height:11px; background:var(--accent); display:block; margin-top:9px; flex:none;"></span><span style="font-size:20px; line-height:1.45; color:var(--body);">{{POINT_2}}</span></div>
+        <div style="display:flex; align-items:flex-start; gap:16px;"><span style="width:11px; height:11px; background:var(--accent); display:block; margin-top:9px; flex:none;"></span><span style="font-size:20px; line-height:1.45; color:var(--body);">{{POINT_3}}</span></div>
+      </div>
+    </div>
+    <div class="footer"><span class="label">Grain Deck System</span><span class="pageno">NN / {{SLIDE_COUNT}}</span></div>
+  </div>
+
+  <!-- ============ 4 · TWO-COLUMN / COMPARISON ("after" column gets the accent top-border) ============ -->
+  <div class="slide">
+    <div class="eyebrow">{{EYEBROW}}</div>
+    <div class="mid">
+      <h2 style="font-size:38px; font-weight:600; margin-bottom:34px;">{{HEADLINE}}</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:56px;">
+        <div style="border-top:2px solid var(--line); padding-top:18px;">
+          <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted);">{{LEFT_LABEL}}</div>
+          <p style="font-size:20px; line-height:1.5; color:var(--body); margin-top:14px;">{{LEFT_BODY}}</p>
+        </div>
+        <div style="border-top:2px solid var(--accent); padding-top:18px;">
+          <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--accent);">{{RIGHT_LABEL}}</div>
+          <p style="font-size:20px; line-height:1.5; color:var(--body); margin-top:14px;">{{RIGHT_BODY}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer"><span class="label">Grain Deck System</span><span class="pageno">NN / {{SLIDE_COUNT}}</span></div>
+  </div>
+
+  <!-- ============ 5 · BIG STATEMENT (one accent word allowed) ============ -->
+  <div class="slide">
+    <div class="eyebrow muted">{{EYEBROW}}</div>
+    <div class="mid" style="justify-content:center;">
+      <h2 style="font-size:58px; font-weight:700; line-height:1.08; letter-spacing:-0.03em; max-width:90%;">{{STATEMENT_BEFORE}} <span style="color:var(--accent);">{{ACCENT_WORD}}</span>{{STATEMENT_AFTER}}</h2>
+    </div>
+    <div class="footer"><span class="label">Grain Deck System</span><span class="pageno">NN / {{SLIDE_COUNT}}</span></div>
+  </div>
+
+  <!-- ============ 6 · DATA / STAT CALLOUT (3-up giant accent numbers + mono caption) ============ -->
+  <div class="slide">
+    <div class="eyebrow">{{EYEBROW}}</div>
+    <div class="mid" style="justify-content:center;">
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:48px; width:100%;">
+        <div><div style="font-size:78px; font-weight:800; letter-spacing:-0.04em; line-height:0.9; color:var(--accent);">{{STAT_1}}</div><div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:18px;">{{CAPTION_1}}</div></div>
+        <div><div style="font-size:78px; font-weight:800; letter-spacing:-0.04em; line-height:0.9; color:var(--accent);">{{STAT_2}}</div><div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:18px;">{{CAPTION_2}}</div></div>
+        <div><div style="font-size:78px; font-weight:800; letter-spacing:-0.04em; line-height:0.9; color:var(--accent);">{{STAT_3}}</div><div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-top:18px;">{{CAPTION_3}}</div></div>
+      </div>
+    </div>
+    <div class="footer"><span class="label">Grain Deck System</span><span class="pageno">NN / {{SLIDE_COUNT}}</span></div>
+  </div>
+
+  <!-- ============ 7 · IMAGE-LED (image carries the slide; minimal type) ============ -->
+  <div class="slide">
+    <div class="eyebrow">{{EYEBROW}}</div>
+    <div class="mid" style="display:grid; grid-template-columns:1.15fr 0.85fr; gap:44px; min-height:0; padding:24px 0;">
+      <!-- Replace this placeholder with: <img src="{{IMAGE_SRC}}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);"> -->
+      <div style="background:var(--image); border:1px solid var(--line); border-radius:var(--radius); display:flex; align-items:center; justify-content:center;">
+        <span style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.16em; text-transform:uppercase; color:var(--muted);">Image</span>
+      </div>
+      <div style="display:flex; flex-direction:column; justify-content:center;">
+        <h2 style="font-size:34px; font-weight:600; margin-bottom:16px;">{{TITLE}}</h2>
+        <p style="font-size:18px; line-height:1.55; color:var(--body);">{{CONTEXT_LINE}}</p>
+      </div>
+    </div>
+    <div class="footer"><span class="label">Grain Deck System</span><span class="pageno">NN / {{SLIDE_COUNT}}</span></div>
+  </div>
+
+</div>
+</body>
+</html>

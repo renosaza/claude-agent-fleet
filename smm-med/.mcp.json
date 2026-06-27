@@ -1,0 +1,17 @@
+{
+  "mcpServers": {
+    "max-mcp": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "run",
+        "--directory",
+        "/path/to/max-mcp",
+        "python",
+        "-m",
+        "max_mcp.server"
+      ],
+      "env": {}
+    }
+  }
+}

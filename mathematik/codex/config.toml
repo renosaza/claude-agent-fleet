@@ -1,0 +1,15 @@
+# Codex configuration for the mathematik project.
+# Place this at the project root as .codex/config.toml (trusted projects),
+# or merge the [mcp_servers.*] blocks into ~/.codex/config.toml.
+
+# Sensible defaults; tune to taste.
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[mcp_servers.sequential-thinking]
+command = "npx"
+args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
+
+[mcp_servers.fetch]
+command = "uvx"
+args = ["mcp-server-fetch"]

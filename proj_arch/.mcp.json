@@ -1,0 +1,42 @@
+{
+  "mcpServers": {
+    "headroom": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["--from", "headroom-ai[mcp]", "headroom", "mcp", "serve"],
+      "env": {}
+    },
+    "context7": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp"],
+      "env": {}
+    },
+    "cloakbrowser": {
+      "type": "stdio",
+      "command": "${HOME}/.claude/mcp-venvs/cloakbrowser/bin/cloakbrowsermcp",
+      "args": ["--caps", "all"],
+      "env": {}
+    },
+    "memorygraph": {
+      "type": "stdio",
+      "command": "${HOME}/.claude/mcp-venvs/memorygraph/bin/memorygraph",
+      "args": ["--profile", "extended"],
+      "env": {
+        "MEMORY_SQLITE_PATH": "${HOME}/.claude/memory-graph/graph.db"
+      }
+    },
+    "sequential-thinking": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"],
+      "env": {}
+    },
+    "fetch": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["mcp-server-fetch"],
+      "env": {}
+    }
+  }
+}

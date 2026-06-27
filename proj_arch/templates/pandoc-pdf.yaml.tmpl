@@ -1,0 +1,26 @@
+# Pandoc defaults: the fleet PDF style for general text/prose reports.
+# Run:  pandoc input.md -d pandoc-pdf.yaml -o output.pdf   (or use md2pdf.sh)
+# Canon: proj_arch/patterns/pdf-reports.md. PDF is opt-in — built only on explicit request.
+#
+# Localized per project: {{TOC_TITLE}} and the fonts ({{MAINFONT}} / {{MONOFONT}}).
+# Defaults below are the Russian-facing fleet defaults; keep the rest of the style fixed.
+#
+# Engine: xelatex is the conceptual standard. tectonic is the installed, drop-in
+# xelatex-compatible engine (invoked as pandoc --pdf-engine=tectonic; there is no `xelatex`
+# command). A pdf-engine set here OVERRIDES the --pdf-engine CLI flag, so set the real engine
+# in this file. If a host has real xelatex, swap this value to xelatex.
+pdf-engine: tectonic
+toc: true
+toc-depth: 3
+number-sections: false
+variables:
+  # Font. PT Serif is a macOS system font with Cyrillic, verified working — the default.
+  # Alternatives with Cyrillic coverage: "DejaVu Serif" (install it first), "Georgia",
+  # "Times New Roman", "Helvetica Neue".
+  mainfont: "{{MAINFONT}}"      # default: "PT Serif"
+  monofont: "{{MONOFONT}}"      # default: "Menlo" (DejaVu Sans Mono may be absent)
+  fontsize: 11pt
+  geometry: margin=2cm
+  linkcolor: blue
+  urlcolor: blue
+  toc-title: "{{TOC_TITLE}}"    # default (RU): "Содержание"; localize per target language

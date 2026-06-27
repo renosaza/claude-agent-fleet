@@ -1,0 +1,32 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor / vault
+.obsidian/
+.idea/
+.vscode/
+
+# Local, non-shareable Claude/Codex state
+**/.claude/settings.local.json
+**/.codex/
+**/CLAUDE.local.md
+**/AGENTS.override.md
+
+# Working data — outputs, inputs, generated artifacts (architecture only in this repo)
+**/output/
+**/input/
+**/work/
+**/reports/
+**/research/
+**/sources/
+**/assets/
+**/tmp_*/
+
+# Project logs / registries (regenerated at runtime)
+**/CHANGELOG.md
+**/REGISTRY.md
+
+# Python
+__pycache__/
+*.pyc
