@@ -1,5 +1,7 @@
 # Claude Agent Fleet
 
+> 🇷🇺 **Русская версия с пошаговой инструкцией и объяснением «на пальцах»:** [`README.ru.md`](README.ru.md)
+
 A shareable reference architecture for **multi-agent projects** built on
 [Claude Code](https://claude.com/claude-code) — with a parallel **OpenAI Codex CLI**
 version of every project (see [`CODEX.md`](CODEX.md)).
@@ -100,8 +102,9 @@ want. The `CLAUDE.md` is loaded as the orchestrator's instructions, and the work
 `.claude/agents/` become dispatchable automatically. That's the whole setup for projects
 whose MCP servers are all auto-installing (`dev-team`, `rnd`, `mathematik`).
 
-For `proj_arch` (and any project using `cloakbrowser` / `memorygraph` / `max-mcp`), edit
-that project's `.mcp.json` first — see **MCP servers** below.
+For `proj_arch` (and any project using `cloakbrowser` / `memorygraph`), edit that project's
+`.mcp.json` first — see **MCP servers** below. `dev-team` adds one manually-installed server,
+`codebase-memory` (see the same table).
 
 ### 2B. Run on Codex CLI
 
@@ -134,12 +137,28 @@ are in [`CODEX.md`](CODEX.md).
 | `headroom` | proj_arch | none — `uvx` auto-installs (`headroom-ai[mcp]`) |
 | `cloakbrowser` | proj_arch | **manual** — point the path at your own install, or remove the block |
 | `memorygraph` | proj_arch | **manual** — point the path at your own install, or remove the block |
-| `max-mcp` | smm-med | **not in this repo** — a separate self-hosted MAX-messenger server; remove the block if you don't have it |
+| `codebase-memory` | dev-team | **manual** — install the binary once (one command), then it works; see below |
 
-The three manual servers use placeholder paths (`${HOME}/.claude/mcp-venvs/...`,
-`/path/to/max-mcp`). Edit them in the project's `.mcp.json` (Claude) and `codex/config.toml`
-(Codex), or delete the server's block if you don't run it — the projects work without them,
-just without that capability (e.g. no persistent memory without `memorygraph`).
+The first two manual servers use placeholder paths (`${HOME}/.claude/mcp-venvs/...`). Edit
+them in the project's `.mcp.json` (Claude) and `codex/config.toml` (Codex), or delete the
+server's block if you don't run it — the projects work without them, just without that
+capability (e.g. no persistent memory without `memorygraph`).
+
+`codebase-memory` ([DeusData/codebase-memory-mcp](https://github.com/DeusData/codebase-memory-mcp))
+is a code-intelligence server: it indexes a codebase into a per-project knowledge graph so the
+dev-team workers can ask structural questions without re-reading files. Install the binary once:
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh \
+  | bash -s -- --skip-config
+```
+
+`--skip-config` installs **only** the binary (to `~/.local/bin/codebase-memory-mcp`) and does
+**not** touch any agent's global config — the repo already wires the server into `dev-team`'s
+`.mcp.json` / `codex/config.toml`. Once installed, open the project and tell the agent
+*"index this project"* to build the graph for the current folder. Each indexed folder gets its
+own isolated graph (stored under `~/.cache/codebase-memory-mcp/`), so different working folders
+keep separate code maps.
 
 ### 3. Verify
 
@@ -153,8 +172,8 @@ just without that capability (e.g. no persistent memory without `memorygraph`).
 To make this safe to share, the export omits: all generated outputs and reports, research
 sources, input photos, the project registry/changelogs, agent memory (memorygraph), and
 local `settings.local.json` permission files. Machine-local paths were replaced with
-placeholders — a few MCP servers reference `${HOME}/.claude/mcp-venvs/…` or `/path/to/…`
-and need to be pointed at your own installs (or removed).
+placeholders — a couple of MCP servers reference `${HOME}/.claude/mcp-venvs/…` and need to be
+pointed at your own installs (or removed).
 
 ## License
 

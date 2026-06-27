@@ -6,6 +6,4 @@
 approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
-[mcp_servers.max-mcp]
-command = "uv"
-args = ["run", "--directory", "/path/to/max-mcp", "python", "-m", "max_mcp.server"]
+# This project uses no MCP servers. Add [mcp_servers.*] blocks here if you wire any in.

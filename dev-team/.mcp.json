@@ -11,6 +11,12 @@
       "command": "uvx",
       "args": ["mcp-server-fetch"],
       "env": {}
+    },
+    "codebase-memory": {
+      "type": "stdio",
+      "command": "${HOME}/.local/bin/codebase-memory-mcp",
+      "args": [],
+      "env": {}
     }
   }
 }

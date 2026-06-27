@@ -77,12 +77,14 @@ requirement.
 
 ## MCP paths to fix
 
-Two MCP servers reference machine-local install paths (placeholders in this repo):
+Some MCP servers reference machine-local install paths or need a one-time install:
 
-- `cloakbrowser` / `memorygraph` use `${HOME}/.claude/mcp-venvs/...` — point these at your
-  actual MCP binaries, or drop the servers if you don't run them.
-- `smm-med`'s `max-mcp` uses `/path/to/max-mcp` — a separate self-hosted server that is
-  **not** part of this repo; remove the block if you don't have it.
+- `proj_arch`'s `cloakbrowser` / `memorygraph` use `${HOME}/.claude/mcp-venvs/...` — point
+  these at your actual MCP binaries, or drop the servers if you don't run them.
+- `dev-team`'s `codebase-memory` expects the binary at `${HOME}/.local/bin/codebase-memory-mcp`.
+  Install it once with
+  `curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/install.sh | bash -s -- --skip-config`
+  (binary only, no global config changes), then it works as wired.
 
 ## References
 

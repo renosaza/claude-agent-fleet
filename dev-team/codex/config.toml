@@ -13,3 +13,9 @@ args = ["-y", "@modelcontextprotocol/server-sequential-thinking"]
 [mcp_servers.fetch]
 command = "uvx"
 args = ["mcp-server-fetch"]
+
+# Code-intelligence MCP: indexes a codebase into a per-project knowledge graph.
+# Install the binary first (see README): it lands in ~/.local/bin/codebase-memory-mcp.
+[mcp_servers.codebase-memory]
+command = "${HOME}/.local/bin/codebase-memory-mcp"
+args = []
