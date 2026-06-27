@@ -160,6 +160,40 @@ curl -fsSL https://raw.githubusercontent.com/DeusData/codebase-memory-mcp/main/i
 own isolated graph (stored under `~/.cache/codebase-memory-mcp/`), so different working folders
 keep separate code maps.
 
+#### Pointing dev-team at another project's folder (new graph per folder)
+
+The `dev-team` agents live in `claude-agent-fleet/dev-team`, but your real code lives elsewhere.
+To make the team reason about *your* code, attach it to that folder and build a fresh graph for it.
+Two ways:
+
+**Option A — run dev-team inside your project's folder (simplest).** Copy the team's config into
+your project root and launch Claude from there:
+
+```sh
+cd ~/work/my-project                              # your working code
+cp  ~/.../claude-agent-fleet/dev-team/CLAUDE.md  .
+cp -r ~/.../claude-agent-fleet/dev-team/.claude  .
+cp  ~/.../claude-agent-fleet/dev-team/.mcp.json  .
+claude                                            # Claude Code starts in your code folder
+```
+
+Then tell the agent *"index this project"*. It calls `index_repository` on the current folder
+(`~/work/my-project`) and builds a **new, separate graph** for it under
+`~/.cache/codebase-memory-mcp/` — other projects' graphs are untouched.
+
+**Option B — keep dev-team in place and pass the path explicitly.** Launch Claude in `dev-team/`
+as usual and name the folder: *"index the repository at `~/work/my-project`, then work on it."*
+`index_repository` takes a path, so the graph is built for that folder even though you're sitting
+in `dev-team`.
+
+**Switching projects.** Every indexed folder is its own graph. To switch, just index a different
+folder — the old graph stays put so you can return to it. Use `list_projects` to see existing
+graphs, and `detect_changes` + a re-run of `index_repository` to refresh a graph after code
+changes.
+
+> In short: **the graph is keyed to the folder, not the team.** One `dev-team` serves any number
+> of projects, each with its own graph, and they never mix.
+
 ### 3. Verify
 
 - **Claude Code:** inside a project, run `/agents` to confirm the workers are listed, and
