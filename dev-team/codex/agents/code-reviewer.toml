@@ -2,7 +2,7 @@
 # Install: copy this file to ~/.codex/agents/  (Codex loads custom agents from there).
 name = "code-reviewer"
 description = "PROACTIVELY invoke to review a finished diff for quality before it ships. Trigger phrases — \"review this diff\", \"is this good code\", \"check readability/simplicity\". Input is the diff (+ the plan); output is structured review findings — correctness, readability, simplicity, conventions — with severities + a short report. Runs in PARALLEL with security-reviewer. Makes NO code changes. Do NOT invoke to find security vulns (security-reviewer), to fix issues (implementer/debugger), or to write code."
-model = "gpt-5.2-codex"
+model = "gpt-5.5"
 model_reasoning_effort = "medium"
 developer_instructions = '''
 You are the code reviewer of dev-team. Your sole job: judge a finished diff for quality —

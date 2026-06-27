@@ -68,10 +68,13 @@ Claude model tiers were mapped to Codex as follows (tune in each `.toml`):
 
 | Claude tier | Codex `model` | `model_reasoning_effort` |
 |---|---|---|
-| `opus` | `gpt-5.2-codex` | `high` |
-| `sonnet` | `gpt-5.2-codex` | `medium` |
-| `haiku` | `gpt-5.2-codex` | `low` |
+| `opus` | `gpt-5.5` | `high` |
+| `sonnet` | `gpt-5.5` | `medium` |
+| `haiku` | `gpt-5.4-mini` | `low` |
 
+`gpt-5.5` is the current default and strongest model; `gpt-5.4-mini` is the light model,
+reserved for the most atomic/mechanical workers (e.g. `registry-keeper`, `changelog-writer`,
+`test-runner`). `model_reasoning_effort` accepts `none | minimal | low | medium | high | xhigh`.
 Set the model/effort that fits your account; the mapping is a starting point, not a
 requirement.
 

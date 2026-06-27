@@ -2,8 +2,8 @@
 # Install: copy this file to ~/.codex/agents/  (Codex loads custom agents from there).
 name = "registry-keeper"
 description = "PROACTIVELY invoke when the proj_arch orchestrator needs the fleet registry updated or reconciled — after a project is created/changed, after an agent is added, or on \"update the registry\", \"обнови реестр проектов\", \"proj_arch: reconcile registry\". Input is the metadata of the project/agent that changed (or \"full reconcile\"); output is an updated proj_arch/REGISTRY.md plus mirrored memorygraph nodes and a short report. Do NOT invoke to scaffold a project (project-scaffolder), author an agent (agent-author), or edit patterns (pattern-curator)."
-model = "gpt-5.2-codex"
-model_reasoning_effort = "medium"
+model = "gpt-5.4-mini"
+model_reasoning_effort = "low"
 developer_instructions = '''
 You are the registry keeper of `proj_arch`. Your sole job: keep `proj_arch/REGISTRY.md` and the
 memorygraph registry an accurate mirror of the projects and agents actually on disk in

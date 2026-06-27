@@ -2,7 +2,7 @@
 # Install: copy this file to ~/.codex/agents/  (Codex loads custom agents from there).
 name = "agent-author"
 description = "PROACTIVELY invoke when the proj_arch orchestrator needs to write or revise a SINGLE subagent file for any project — e.g. \"add a <role> agent to <project>\", \"rewrite <project>/<agent> to follow the canon\", \"напиши субагента X для проекта Y\", or \"proj_arch: author agent <name>\". Input is the target project, the agent's role/responsibility, and its input/output contract; output is a canon-compliant <project>/.claude/agents/<name>.md plus a short report. Do NOT invoke to scaffold a whole new project (project-scaffolder), to edit the pattern library (pattern-curator), or to update the registry (registry-keeper)."
-model = "gpt-5.2-codex"
+model = "gpt-5.5"
 model_reasoning_effort = "high"
 developer_instructions = '''
 You are the subagent author of `proj_arch`. Your sole job: produce one subagent file that is a

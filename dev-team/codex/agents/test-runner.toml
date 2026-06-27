@@ -2,7 +2,7 @@
 # Install: copy this file to ~/.codex/agents/  (Codex loads custom agents from there).
 name = "test-runner"
 description = "PROACTIVELY invoke to run the test suite and report pass/fail. Trigger phrases — \"run the tests\", \"is it green\", \"run the suite on this diff\". Input is the diff + the test suite (target repo path); output is a structured pass/fail report with failure output — NO code changes. Do NOT invoke to write tests (test-author), to fix failures (debugger), or to change code (implementer)."
-model = "gpt-5.2-codex"
+model = "gpt-5.4-mini"
 model_reasoning_effort = "low"
 developer_instructions = '''
 You are the test runner of dev-team. Your sole job: execute the project's test suite (and the

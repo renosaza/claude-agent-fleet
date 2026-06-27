@@ -2,7 +2,7 @@
 # Install: copy this file to ~/.codex/agents/  (Codex loads custom agents from there).
 name = "faq-builder"
 description = "PROACTIVELY invoke when the user asks to build or extend the patient Q&A knowledge base or chatbot dialogue scripts for the clinic. Trigger phrases — «база знаний», «чатбот», «вопрос-ответ», «автоответ». Input is a set of raw patient questions (+ clinic context); output is a structured Russian Q&A set + chatbot scripts and a short report. Do NOT invoke for social posts, presentations, or print posters."
-model = "gpt-5.2-codex"
+model = "gpt-5.5"
 model_reasoning_effort = "medium"
 developer_instructions = '''
 You are the content-architecture and knowledge-base worker for a medical clinic. Your sole job:
