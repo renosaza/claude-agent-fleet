@@ -60,16 +60,93 @@ proj_arch/
 └── templates/           # fill-in skeletons the scaffolder uses
 ```
 
-## Using it
+## Deployment
 
-### Claude Code
-Open any project directory with Claude Code. `CLAUDE.md` is loaded automatically and the
-workers in `.claude/agents/` become available. Review `.mcp.json` and point any
-machine-local MCP server paths at your own install (see notes below).
+You only need to set up the project(s) you actually want to run. Each project is
+self-contained — pick one and follow the steps for your tool.
 
-### Codex CLI
-See [`CODEX.md`](CODEX.md) for the full install steps (copy `codex/agents/*.toml` into
-`~/.codex/agents/`, set up `config.toml`).
+### Prerequisites
+
+| Tool | Needed for | Install |
+|---|---|---|
+| **Claude Code** | running the Claude version | https://claude.com/claude-code |
+| **OpenAI Codex CLI** | running the Codex version | `npm i -g @openai/codex` (see https://developers.openai.com/codex) |
+| **Node.js + `npx`** | `sequential-thinking`, `context7` MCP servers | https://nodejs.org (LTS) |
+| **Python + [`uv`](https://docs.astral.sh/uv/) (`uvx`)** | `fetch`, `headroom` MCP servers | `curl -LsSf https://astral.sh/uv/install.sh \| sh` |
+| **`git`** | cloning this repo | preinstalled on macOS/Linux |
+
+Most MCP servers used here **install themselves on first launch** via `npx`/`uvx` — you do
+not pre-install them. Only a few need manual setup (see the MCP table below).
+
+### 1. Clone
+
+```sh
+git clone https://github.com/renosaza/claude-agent-fleet.git
+cd claude-agent-fleet
+```
+
+### 2A. Run on Claude Code
+
+Claude Code auto-discovers `CLAUDE.md`, `.claude/agents/`, and `.mcp.json` from the
+directory it is launched in. So:
+
+```sh
+cd dev-team          # or proj_arch / rnd / mathematik / smm-med
+claude               # launch Claude Code in this directory
+```
+
+On first run Claude Code asks to approve the project's MCP servers — accept the ones you
+want. The `CLAUDE.md` is loaded as the orchestrator's instructions, and the workers in
+`.claude/agents/` become dispatchable automatically. That's the whole setup for projects
+whose MCP servers are all auto-installing (`dev-team`, `rnd`, `mathematik`).
+
+For `proj_arch` (and any project using `cloakbrowser` / `memorygraph` / `max-mcp`), edit
+that project's `.mcp.json` first — see **MCP servers** below.
+
+### 2B. Run on Codex CLI
+
+Codex uses `AGENTS.md` (already at each project root) for instructions, but its custom
+agents live **globally** in `~/.codex/agents/`, not in the repo. From a project directory:
+
+```sh
+cd dev-team
+
+# install this project's workers as global Codex custom agents
+mkdir -p ~/.codex/agents
+cp codex/agents/*.toml ~/.codex/agents/
+
+# install MCP servers + sandbox config as a trusted project-local config
+mkdir -p .codex && cp codex/config.toml .codex/config.toml
+
+codex                # launch; restart if it was already running, so agents reload
+```
+
+Full details, the model-tier mapping, and a note on agent-name collisions between projects
+are in [`CODEX.md`](CODEX.md).
+
+### MCP servers — what each needs
+
+| Server | Used by | Setup |
+|---|---|---|
+| `sequential-thinking` | all | none — `npx` auto-installs |
+| `fetch` | all | none — `uvx` auto-installs |
+| `context7` | proj_arch | none — `npx` auto-installs |
+| `headroom` | proj_arch | none — `uvx` auto-installs (`headroom-ai[mcp]`) |
+| `cloakbrowser` | proj_arch | **manual** — point the path at your own install, or remove the block |
+| `memorygraph` | proj_arch | **manual** — point the path at your own install, or remove the block |
+| `max-mcp` | smm-med | **not in this repo** — a separate self-hosted MAX-messenger server; remove the block if you don't have it |
+
+The three manual servers use placeholder paths (`${HOME}/.claude/mcp-venvs/...`,
+`/path/to/max-mcp`). Edit them in the project's `.mcp.json` (Claude) and `codex/config.toml`
+(Codex), or delete the server's block if you don't run it — the projects work without them,
+just without that capability (e.g. no persistent memory without `memorygraph`).
+
+### 3. Verify
+
+- **Claude Code:** inside a project, run `/agents` to confirm the workers are listed, and
+  `/mcp` to confirm the MCP servers connected.
+- **Codex CLI:** run `/mcp` to list connected servers; reference a worker by name in a
+  prompt (e.g. *"have `code-reviewer` look at this diff"*) to confirm custom agents loaded.
 
 ## What was removed
 
