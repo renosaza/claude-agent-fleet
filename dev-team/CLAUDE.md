@@ -47,7 +47,7 @@ put the whole team on opus.
 
 ## Workflow
 1. **Recall memory first (proactive).** Before planning:
-   `recall_memories(project_path="~/Documents/claude/dev-team")` and
+   `recall_memories(project_path="/Users/renosaza/Documents/claude/dev-team")` and
    `search_memories(tags=["dev-team"])` — prior task recipes, recurring failure modes, user
    preferences, the target repo's conventions. State briefly what you recalled.
 2. **Frame the task and resolve ambiguity with the user** before dispatching: the target repo
@@ -92,6 +92,28 @@ fixed; `code-reviewer` ∥ `security-reviewer` on the same diff. Everything else
 data dependency. Workers hand data to each other only through files in `work/` and the diff;
 there is no hidden shared state.
 
+## Workflow — full security audit (whole-repo, on request)
+A separate, heavier flow from the per-diff `security-reviewer` pass above. Triggered by "full
+security audit", "audit the whole repo", "deep security audit". The orchestrator owns the fan-out;
+the worker has no `Agent` tool (`security-reviewer` runs in single-attack-class hunt mode, Mode B).
+1. **Recon.** Dispatch `codebase-explorer` over the target repo to map entry points, sinks, trust
+   boundaries, and components → `work/architecture.md`.
+2. **Fan-out hunt (parallel).** Dispatch one `security-reviewer` per attack class — Injection,
+   Access Control, Resource & File Handling, Cryptography & Secrets, Business Logic, Feature Abuse
+   & Data Leakage, Wildcard, Obvious Things — each with `{attack class, target repo path,
+   work/architecture.md}`. Launch them concurrently (one class per dispatch; workers do not spawn
+   workers — the fan-out lives here). Each runs the 5 adversarial-validation tests itself and
+   returns only surviving findings (with an exact triggering input) or "No exploitable
+   vulnerabilities found in <class>".
+3. **Chaining pass.** After the per-class hunts return, dispatch one more `security-reviewer` on
+   **Chained Attacks & Trust Boundaries**, handed the assembled per-class findings so it can spot
+   dangerous combinations (info-disclosure + IDOR, cross-component trust gaps) and dedup overlaps.
+4. **Assemble.** The orchestrator (not a worker) stitches the Markdown sections into one
+   `work/REPORT.md`: executive summary → findings table (severity | title | one-line) → per-class
+   detail → Hardening notes (NOT findings) → Positive patterns. Markdown only — no findings.json.
+5. **Persist + report (Russian)** as usual: severities, the critical/high findings, and any item
+   needing human security confirmation.
+
 ## Dispatching (routing table)
 | Trigger | Worker | Why this worker |
 |---|---|---|
@@ -103,6 +125,7 @@ there is no hidden shared state.
 | a test/run is red, find the cause | `debugger` | root-cause + minimal fix |
 | judge quality/readability/simplicity of a diff | `code-reviewer` | impartial review of code it did not write |
 | judge security of a diff + deps (OWASP) | `security-reviewer` | adversarial security pass + vuln scan |
+| "full security audit" / "audit the whole repo" / deep audit | recon (`codebase-explorer`) → parallel `security-reviewer`, one per attack class → assemble `REPORT.md` | whole-repo audit fans out one hunter per class; orchestration stays here, worker has no `Agent` tool (see "Workflow — full security audit") |
 | update docs/changelog/API notes for a merged change | `documenter` | writes docs from the final change |
 
 Sequencing: explore → architect → implement (∥ test-author) → test-runner → (debugger if red)
@@ -142,7 +165,7 @@ Sequencing: explore → architect → implement (∥ test-author) → test-runne
 ## Memory
 Project tag: `dev-team`.
 On session start (PROACTIVELY, before planning): query memorygraph for this project —
-`recall_memories(project_path="~/Documents/claude/dev-team")` and
+`recall_memories(project_path="/Users/renosaza/Documents/claude/dev-team")` and
 `search_memories(tags=["dev-team"])` — to recall prior task recipes, recurring failure modes,
 target-repo conventions, and user preferences. State briefly what was recalled.
 
